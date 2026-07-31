@@ -1,0 +1,6 @@
+{
+  "name": "Travel US",
+  "description": "Sitio web premium para la agencia de viajes Travel US, especialista en tiquetes aéreos internacionales. Fundada y dirigida por un piloto comercial activo, integrada directamente con Telegram.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
