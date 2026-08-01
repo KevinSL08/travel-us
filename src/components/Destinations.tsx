@@ -9,7 +9,7 @@ interface DestinationsProps {
   onSelectDestinationForQuote: (title: string) => void;
 }
 
-type CategoryFilter = 'todos' | 'nacionales' | 'internacionales' | 'america' | 'europa' | 'caribe';
+type CategoryFilter = 'todos' | 'nacionales' | 'internacionales';
 
 export default function Destinations({ telegramConfig, onSelectDestinationForQuote }: DestinationsProps) {
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('todos');
@@ -17,11 +17,8 @@ export default function Destinations({ telegramConfig, onSelectDestinationForQuo
 
   const categories: { value: CategoryFilter; label: string }[] = [
     { value: 'todos', label: 'Todas las Rutas' },
-    { value: 'nacionales', label: '🇨🇴 Rutas Nacionales' },
-    { value: 'internacionales', label: '🌐 Rutas Internacionales' },
-    { value: 'europa', label: '🇪🇺 Europa' },
-    { value: 'america', label: '🇺🇸 Norteamérica' },
-    { value: 'caribe', label: '🏝️ El Caribe' },
+    { value: 'nacionales', label: '🇨🇴 Rutas Nacionales (Medellín, Bogotá, Cali, San Andrés)' },
+    { value: 'internacionales', label: '🌐 Rutas Internacionales (Madrid, París)' },
   ];
 
   const filteredRoutes = flightRoutes.filter(route => {
@@ -148,12 +145,13 @@ export default function Destinations({ telegramConfig, onSelectDestinationForQuo
                     </div>
                   </div>
 
-                  {/* Pricing and Action Footer */}
+                  {/* Action Footer */}
                   <div className="pt-4 border-t border-gray-100 flex items-center justify-between mt-auto">
                     <div>
-                      <span className="text-[10px] text-gray-400 block font-semibold uppercase tracking-wider">Tiquete desde</span>
-                      <span className="text-xl sm:text-2xl font-display font-extrabold text-brand-navy">
-                        {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(route.priceFrom)}
+                      <span className="text-[10px] text-gray-400 block font-bold uppercase tracking-wider">Disponibilidad</span>
+                      <span className="text-sm font-display font-extrabold text-brand-navy flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                        <span>Cotización en vivo</span>
                       </span>
                     </div>
 
@@ -263,7 +261,7 @@ export default function Destinations({ telegramConfig, onSelectDestinationForQuo
 
                   {/* Partner airlines */}
                   <div className="mb-8 p-3 rounded-lg bg-gray-50 border border-gray-100">
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-2">Aerolíneas Disponibles para esta tarifa</span>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block mb-2">Aerolíneas Disponibles para esta ruta</span>
                     <div className="flex flex-wrap gap-2">
                       {selectedRoute.airlines.map((airline, idx) => (
                         <span key={idx} className="bg-brand-navy/5 text-brand-navy text-[11px] px-2.5 py-1 rounded font-semibold border border-brand-navy/10">
@@ -276,9 +274,9 @@ export default function Destinations({ telegramConfig, onSelectDestinationForQuo
                   {/* Booking Section inside Modal */}
                   <div className="p-5 rounded-xl bg-brand-beige border border-amber-100 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div>
-                      <span className="text-xs text-gray-400 uppercase font-bold tracking-wide">Tarifa de tiquete desde</span>
-                      <div className="text-2xl font-display font-extrabold text-brand-navy">
-                        {new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(selectedRoute.priceFrom)} <span className="text-xs font-mono font-normal text-gray-500">COP / Ida y Vuelta</span>
+                      <span className="text-xs text-gray-400 uppercase font-bold tracking-wide">Cotización Inmediata</span>
+                      <div className="text-lg font-display font-bold text-brand-navy">
+                        Tarifa Personalizada Directa <span className="text-xs font-mono font-normal text-gray-500">vía Telegram</span>
                       </div>
                     </div>
                     <div className="flex gap-2 w-full sm:w-auto">

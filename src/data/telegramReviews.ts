@@ -19,9 +19,9 @@ export const telegramReviews: TelegramReview[] = [
       {
         sender: 'agent',
         senderName: 'Brayan • Capitán Travel US 👨‍✈️',
-        text: '¡Hola Carlos! Excelente recomendación. Te coticé cupo consolidado directo en Iberia (Airbus A350) saliendo a las 22:15. Tarifa preferencial: $2.850.000 COP por persona con maleta de 23kg y documento de soporte para migración.',
+        text: '¡Hola Carlos! Excelente recomendación. Te coticé cupo consolidado directo en Iberia (Airbus A350) saliendo a las 22:15. Tarifa preferencial exclusiva por persona con maleta de 23kg y documento de soporte para migración.',
         time: '18:41',
-        flightBadge: '✈️ MADRID (MAD) — $2.850.000 COP / pax — PNR: #IB-7829',
+        flightBadge: '✈️ MADRID (MAD) — Cupo Consolidado Iberia — PNR: #IB-7829',
         isVerified: true,
         attachmentType: 'ticket',
         attachmentTitle: 'Cotización_Oficial_Iberia_MAD.pdf'
@@ -29,7 +29,7 @@ export const telegramReviews: TelegramReview[] = [
       {
         sender: 'customer',
         senderName: 'Carlos Mendoza',
-        text: '¡Espectacular Brayan! En la página de la aerolínea estaba casi en 4 millones. Te hice la transferencia directa a la cuenta corporativa. comprobante enviado 👍',
+        text: '¡Espectacular Brayan! En la página web de la aerolínea estaba carísimo y sin opción de equipaje. Te hice la transferencia directa a la cuenta corporativa. comprobante enviado 👍',
         time: '18:43'
       },
       {
@@ -52,7 +52,7 @@ export const telegramReviews: TelegramReview[] = [
     id: 'rev-2',
     customerName: 'Valeria Restrepo',
     customerAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
-    routeTitle: 'Vuelo Express a Miami (MIA)',
+    routeTitle: 'Vuelo Express a Medellín (MDE)',
     rating: 5,
     date: 'Hace 2 días',
     verifiedPurchase: true,
@@ -60,23 +60,23 @@ export const telegramReviews: TelegramReview[] = [
       {
         sender: 'customer',
         senderName: 'Valeria Restrepo',
-        text: 'Hola Brayan, buenas tardes! Me te recomendó un colega de la oficina. Necesito viajar de urgencia a Miami este jueves por un compromiso de trabajo. ¿Conseguimos buena tarifa?',
+        text: 'Hola Brayan, buenas tardes! Me te recomendó un colega de la oficina. Necesito viajar de urgencia a Medellín este jueves por un compromiso de trabajo. ¿Conseguimos buena tarifa?',
         time: '11:15'
       },
       {
         sender: 'agent',
         senderName: 'Brayan • Asesoría Travel US',
-        text: '¡Hola Valeria! Claro que sí. Te reservé un cupo corporativo directo en American Airlines saliendo a las 07:15 AM. Tarifa promo express por $1.350.000 COP ida y vuelta con maleta de mano.',
+        text: '¡Hola Valeria! Claro que sí. Te reservé un cupo corporativo directo saliendo a las 07:15 AM al aeropuerto José María Córdova (MDE). Tarifa promo express preferencial ida y vuelta con maleta de mano.',
         time: '11:17',
-        flightBadge: '✈️ MIAMI (MIA) — $1.350.000 COP — Vuelo Confirmado AA',
+        flightBadge: '✈️ MEDELLÍN (MDE) — Cupo Corporativo Express LATAM',
         isVerified: true,
         attachmentType: 'ticket',
-        attachmentTitle: 'Reserva_AmericanAirlines_MIA.pdf'
+        attachmentTitle: 'Reserva_LATAM_Medellin.pdf'
       },
       {
         sender: 'customer',
         senderName: 'Valeria Restrepo',
-        text: '¡Salvada total! Pago confirmado por Nequi. En menos de 10 minutos me emitiste todo directo aquí al Telegram. Llegué a Miami sin contratiempos. Mil gracias! 👏',
+        text: '¡Salvada total! Pago confirmado por Nequi. En menos de 10 minutos me emitiste todo directo aquí al Telegram. Llegué a Medellín sin contratiempos. Mil gracias Brayan! 👏',
         time: '11:22'
       }
     ]
@@ -85,7 +85,7 @@ export const telegramReviews: TelegramReview[] = [
     id: 'rev-3',
     customerName: 'Santiago & Familia',
     customerAvatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=200&q=80',
-    routeTitle: 'Vuelo Familiar a Punta Cana (PUJ)',
+    routeTitle: 'Vuelo Nocturno a París (CDG)',
     rating: 5,
     date: 'Hace 3 días',
     verifiedPurchase: true,
@@ -93,21 +93,23 @@ export const telegramReviews: TelegramReview[] = [
       {
         sender: 'customer',
         senderName: 'Santiago',
-        text: 'Hola! Buscamos tiquetes para 4 adultos a Punta Cana para vacaciones familiares en junio. ¿Tienen tarifa de grupo?',
+        text: 'Hola Brayan! Buscamos tiquetes para 3 adultos a París para vacaciones familiares en octubre. ¿Tienen tarifa con maleta de bodega?',
         time: '15:02'
       },
       {
         sender: 'agent',
-        senderName: 'Despacho Travel US',
-        text: '¡Hola Santiago! Sí, te estructuré tarifa especial de grupo por Copa Airlines con conexión rápida. $1.250.000 COP por persona ida y vuelta con equipaje completo de 23kg y asientos juntos.',
+        senderName: 'Brayan • Despacho Travel US',
+        text: '¡Hola Santiago! Sí, te estructuré tarifa especial de grupo directo en Air France (Boeing 787). Tarifa consolidada por persona ida y vuelta con equipaje completo de 23kg y asientos juntos.',
         time: '15:05',
-        flightBadge: '🏝️ PUNTA CANA (PUJ) — $1.250.000 COP / pax — Tarifa Grupal',
-        isVerified: true
+        flightBadge: '🗼 PARÍS (CDG) — Tarifa Especial Air France Directo',
+        isVerified: true,
+        attachmentType: 'ticket',
+        attachmentTitle: 'Cotización_AirFrance_Paris_Familia.pdf'
       },
       {
         sender: 'customer',
         senderName: 'Santiago',
-        text: '¡Nos ahorraste casi 2 millones de pesos en total! La atención por Telegram súper rápida, transferencia directa y tiquetes oficiales en el acto. Nos fue espectacular en el viaje. 10/10 🎉',
+        text: '¡Nos ahorraste muchísimo presupuesto! La atención por Telegram súper rápida, transferencia directa y tiquetes oficiales en el acto. Pasamos migración en París sin pedirnos nada extra. 10/10 🎉',
         time: '15:10'
       }
     ]
@@ -116,7 +118,7 @@ export const telegramReviews: TelegramReview[] = [
     id: 'rev-4',
     customerName: 'Dr. Fernando Gómez',
     customerAvatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80',
-    routeTitle: 'Vuelo Larga Distancia a Tokio (NRT)',
+    routeTitle: 'Vuelo Ejecutivo a Cali (CLO)',
     rating: 5,
     date: 'Hace 4 días',
     verifiedPurchase: true,
@@ -124,23 +126,23 @@ export const telegramReviews: TelegramReview[] = [
       {
         sender: 'customer',
         senderName: 'Dr. Fernando Gómez',
-        text: 'Buenas noches. Estoy planificando un viaje a Japón. Me preocupan las horas de vuelo, el jetlag y los controles de escala.',
+        text: 'Buenas noches Brayan. Necesito viajar a un congreso médico en Cali con fechas fijas y buena flexibilidad por si la agenda se extiende.',
         time: '09:30'
       },
       {
         sender: 'agent',
-        senderName: 'Capitán Travel US 👨‍✈️',
-        text: 'Hola Dr. Fernando. Te programé el itinerario en Boeing 787 Dreamliner de ANA por $5.200.000 COP ida y vuelta. La cabina presurizada reduce la deshidratación y la fatiga. Escala idónea de 2 horas.',
+        senderName: 'Brayan • Capitán Travel US 👨‍✈️',
+        text: 'Hola Dr. Fernando. Te programé el itinerario directo a Cali (CLO) con tarifa preferencial flexible. Asiento en primeras filas y prioridad de abordaje.',
         time: '09:35',
-        flightBadge: '⛩️ TOKIO (NRT) — $5.200.000 COP — Dreamliner Confort',
+        flightBadge: '✈️ CALI (CLO) — Tarifa Preferencial Ejecutivo Avianca',
         isVerified: true,
         attachmentType: 'voice',
-        audioDuration: '0:38'
+        audioDuration: '0:28'
       },
       {
         sender: 'customer',
         senderName: 'Dr. Fernando Gómez',
-        text: 'Llegué a Tokio la semana pasada y debo confirmar que la recomendación técnica sobre la presurización de la nave fue 100% acertada. Pasé migración sin novedad y descansado. Excelente servicio por Telegram.',
+        text: 'Viaje impecable Brayan. Puntualidad perfecta, el abordaje prioritario funcionó de maravilla y la atención por Telegram fue inmejorable.',
         time: '09:45'
       }
     ]
@@ -163,9 +165,9 @@ export const telegramReviews: TelegramReview[] = [
       {
         sender: 'agent',
         senderName: 'Brayan • Soporte Vuelos',
-        text: '¡Hola Cami! Te liberamos 2 cupos directos con LATAM por $420.000 COP ida y vuelta con maleta de mano y morral incluido.',
+        text: '¡Hola Cami! Te liberamos 2 cupos directos en tarifa promo especial con LATAM ida y vuelta con maleta de mano y morral incluido.',
         time: '14:28',
-        flightBadge: '🇨🇴 SAN ANDRÉS (ADZ) — $420.000 COP — Cupo Promo LATAM',
+        flightBadge: '🇨🇴 SAN ANDRÉS (ADZ) — Cupo Promo Especial LATAM',
         isVerified: true,
         attachmentType: 'ticket',
         attachmentTitle: 'Reserva_LATAM_SanAndres_Camila.pdf'

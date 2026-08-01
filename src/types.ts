@@ -5,7 +5,7 @@ export interface FlightRoute {
   airportCode: string;
   description: string;
   image: string;
-  priceFrom: number;
+  priceFrom?: number;
   flightType: 'Directo' | '1 Escala' | '2 Escalas';
   duration: string;
   category: 'nacional' | 'internacional' | 'america' | 'europa' | 'asia' | 'caribe' | 'oceania';
