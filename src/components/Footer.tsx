@@ -1,4 +1,4 @@
-import { Send, MapPin, Mail, Phone, Plane, ShieldCheck } from 'lucide-react';
+import { Send, MapPin, Phone, Plane, ShieldCheck } from 'lucide-react';
 import { TelegramConfig } from '../types';
 
 interface FooterProps {
@@ -102,15 +102,11 @@ export default function Footer({ telegramConfig }: FooterProps) {
           <ul className="space-y-3 text-gray-400">
             <li className="flex items-start gap-2">
               <MapPin className="w-4 h-4 text-brand-gold shrink-0 mt-0.5" />
-              <span>Miami Flight Desk Office, Brickell Ave, Miami, FL, EE.UU.</span>
+              <span>Cúcuta, Norte de Santander</span>
             </li>
             <li className="flex items-center gap-2">
               <Phone className="w-4 h-4 text-brand-gold shrink-0" />
-              <span>+1 (305) 555-0190 (Asistencia Aérea)</span>
-            </li>
-            <li className="flex items-center gap-2">
-              <Mail className="w-4 h-4 text-brand-gold shrink-0" />
-              <span>vuelos@travelusagency.com</span>
+              <span>+57 3107800721</span>
             </li>
             <li className="flex items-center gap-2 text-sky-400 font-bold">
               <Send className="w-4 h-4 shrink-0" />

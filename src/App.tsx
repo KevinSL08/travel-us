@@ -8,23 +8,25 @@ import Hero from './components/Hero';
 import Features from './components/Features';
 import Destinations from './components/Destinations';
 import TelegramReviews from './components/TelegramReviews';
-import TelegramConfigCard from './components/TelegramConfigCard';
-import FAQ from './components/FAQ';
 import Footer from './components/Footer';
 
 export default function App() {
-  // Read Telegram configuration from localStorage, fallback to professional flight default
+  // Read Telegram configuration from localStorage, fallback to official Travelusagencia
   const [telegramConfig, setTelegramConfig] = useState<TelegramConfig>(() => {
     const saved = localStorage.getItem('travelus_telegram_config');
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (!parsed.channelUsername || parsed.channelUsername === 'TravelUSFlights') {
+          parsed.channelUsername = 'Travelusagencia';
+        }
+        return parsed;
       } catch (e) {
         // ignore
       }
     }
     return {
-      channelUsername: 'TravelUSFlights',
+      channelUsername: 'Travelusagencia',
       isChannel: false,
       customGreetingMessage: '¡Hola! Me gustaría cotizar un vuelo internacional con Travel US.'
     };
@@ -122,12 +124,6 @@ export default function App() {
             >
               Opiniones
             </button>
-            <button
-              onClick={() => handleScrollToSection('faq-section')}
-              className="hover:text-brand-gold transition-colors cursor-pointer"
-            >
-              Preguntas
-            </button>
           </nav>
 
           {/* Header Action CTA */}
@@ -187,12 +183,6 @@ export default function App() {
             >
               Opiniones en Telegram
             </button>
-            <button
-              onClick={() => handleScrollToSection('faq-section')}
-              className="text-left text-lg font-display font-medium py-2 border-b border-white/5 hover:text-brand-gold transition-colors"
-            >
-              Preguntas Frecuentes
-            </button>
 
             <div className="pt-6">
               <a
@@ -233,15 +223,6 @@ export default function App() {
 
         {/* 4. Animated Telegram Chat Reviews Section */}
         <TelegramReviews telegramConfig={telegramConfig} />
-
-        {/* 5. FAQs Section */}
-        <FAQ telegramConfig={telegramConfig} />
-
-        {/* 6. Dynamic Telegram Integration settings panel */}
-        <TelegramConfigCard
-          config={telegramConfig}
-          onUpdateConfig={handleUpdateConfig}
-        />
 
       </main>
 

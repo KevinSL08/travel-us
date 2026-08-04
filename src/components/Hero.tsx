@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { Send, Plane, ArrowDown } from 'lucide-react';
 import { TelegramConfig } from '../types';
 
-const pilotHeroImg = new URL('../assets/images/hero_pilot_outside_plane_1785295229002.jpg', import.meta.url).href;
+const heroWingSunsetImg = new URL('../assets/images/hero_cover_wing_sunset_1785798842420.jpg', import.meta.url).href;
 
 interface HeroProps {
   telegramConfig: TelegramConfig;
@@ -21,7 +21,7 @@ export default function Hero({ telegramConfig, onExploreClick, onPlanClick }: He
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-10000 ease-out scale-105"
         style={{ 
-          backgroundImage: `url(${pilotHeroImg})`
+          backgroundImage: `url(${heroWingSunsetImg})`
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/75 via-brand-navy/65 to-brand-navy/95 z-10" />

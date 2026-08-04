@@ -1,513 +1,294 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+
+const nightCityAerialImg = new URL('../assets/images/night_city_aerial_1785798983956.jpg', import.meta.url).href;
 import { 
   Send, 
   CheckCheck, 
   Star, 
-  ShieldCheck, 
-  ChevronLeft, 
-  ChevronRight, 
-  Pause, 
-  Play, 
-  LayoutGrid, 
-  RotateCw, 
-  Plane, 
-  Award,
-  Phone,
-  Search,
-  MoreVertical,
-  Paperclip,
-  Smile,
-  ArrowLeft,
-  Sparkles,
-  Clock
+  Sparkles, 
+  X,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  Image as ImageIcon
 } from 'lucide-react';
-import { TelegramConfig } from '../types';
-import { telegramReviews } from '../data/telegramReviews';
+import { TelegramConfig, TelegramReview } from '../types';
+import { telegramReviews as initialReviews } from '../data/telegramReviews';
 
 interface TelegramReviewsProps {
   telegramConfig: TelegramConfig;
 }
 
 export default function TelegramReviews({ telegramConfig }: TelegramReviewsProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [viewMode, setViewMode] = useState<'carousel' | 'grid'>('carousel');
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+  const [reviewsList, setReviewsList] = useState<TelegramReview[]>(initialReviews);
+  const [selectedChatId, setSelectedChatId] = useState<string>(initialReviews[0].id);
+  // Modal Lightbox for images
+  const [activeModalImage, setActiveModalImage] = useState<{ url: string; caption?: string; title?: string } | null>(null);
 
-  const totalReviews = telegramReviews.length;
+  // Carousel ref for horizontal scrolling
+  const carouselRef = useRef<HTMLDivElement | null>(null);
 
-  // Handle auto-rotation
-  useEffect(() => {
-    if (isPlaying && viewMode === 'carousel') {
-      autoPlayRef.current = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % totalReviews);
-      }, 6000);
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    if (carouselRef.current) {
+      const scrollAmount = direction === 'left' ? -380 : 380;
+      carouselRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
-    return () => {
-      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-    };
-  }, [isPlaying, viewMode, totalReviews]);
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % totalReviews);
   };
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + totalReviews) % totalReviews);
-  };
+
 
   const getTelegramUrl = (customText?: string) => {
     const text = customText 
       ? encodeURIComponent(customText)
-      : encodeURIComponent(telegramConfig.customGreetingMessage || '¡Hola! Me gustaría cotizar un vuelo.');
+      : encodeURIComponent(telegramConfig.customGreetingMessage || '¡Hola Capitán Brayan! Vengo desde la web y quiero cotizar un vuelo.');
     return `https://t.me/${telegramConfig.channelUsername}?text=${text}`;
   };
 
-  const activeReview = telegramReviews[currentIndex];
-
   return (
-    <section className="py-24 bg-brand-navy relative overflow-hidden text-white select-none" id="reviews-section">
-      {/* Background subtle atmospheric radial gradient */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-900/30 via-brand-navy to-[#080d14] pointer-events-none" />
+    <section className="py-20 bg-[#080d14] relative overflow-hidden text-white font-sans select-none" id="reviews-section">
+      
+      {/* Background glow effects */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-sky-900/20 via-[#080d14] to-[#04070a] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        {/* Section Title Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-400 text-xs font-semibold tracking-wider uppercase mb-4 shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-sky-500/10 border border-sky-400/30 text-sky-400 text-xs font-bold tracking-wider uppercase mb-3 shadow-sm"
           >
             <Send className="w-3.5 h-3.5 text-sky-400 animate-pulse" />
-            <span>TESTIMONIOS EN TIEMPO REAL VÍA TELEGRAM</span>
+            <span>INTERFAZ TELEGRAM REAL EN TIEMPO REAL</span>
           </motion.div>
 
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl font-display font-extrabold text-white mb-4 leading-tight"
-            id="reviews-title"
+            className="text-3xl sm:text-4xl md:text-5xl font-display font-black text-white mb-4 leading-tight"
           >
-            Así Cotizan y Compran <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-amber-300 to-brand-gold">
-              Nuestros Pasajeros en Telegram
+            Chats y Tiquetes <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-amber-300 to-brand-gold">
+              Emitidos Directo por Telegram
             </span>
           </motion.h2>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-gray-300 font-sans text-xs md:text-sm leading-relaxed max-w-2xl mx-auto"
+            className="text-gray-300 text-xs sm:text-sm leading-relaxed max-w-2xl mx-auto"
           >
-            Sin formularios extensos ni esperas. Atención personalizada de piloto comercial con emisión instantánea de tiquetes.
+            Nuestros pasajeros conversan directamente con el Capitán Brayan. Mira los e-tickets oficiales, mapas de asientos, fotos de vuelo y notas de voz reales.
           </motion.p>
-
-          {/* Controls bar: Carousel vs Grid mode toggle + Auto-play toggle */}
-          <div className="flex flex-wrap items-center justify-center gap-3 mt-8" id="reviews-mode-toggle">
-            <div className="bg-[#17212b]/90 p-1 rounded-xl border border-white/10 inline-flex shadow-lg backdrop-blur-md">
-              <button
-                onClick={() => setViewMode('carousel')}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
-                  viewMode === 'carousel'
-                    ? 'bg-brand-gold text-brand-navy shadow-md'
-                    : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                <RotateCw className={`w-3.5 h-3.5 ${viewMode === 'carousel' && isPlaying ? 'animate-spin' : ''}`} />
-                Modo Chat Interactivo
-              </button>
-              <button
-                onClick={() => setViewMode('grid')}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 cursor-pointer ${
-                  viewMode === 'grid'
-                    ? 'bg-brand-gold text-brand-navy shadow-md'
-                    : 'text-gray-300 hover:text-white'
-                }`}
-              >
-                <LayoutGrid className="w-3.5 h-3.5" />
-                Mosaico ({totalReviews} Casos)
-              </button>
-            </div>
-
-            {viewMode === 'carousel' && (
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/10 text-xs text-gray-200 font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
-                title={isPlaying ? 'Pausar rotación' : 'Reanudar rotación'}
-              >
-                {isPlaying ? (
-                  <>
-                    <Pause className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Pausar</span>
-                  </>
-                ) : (
-                  <>
-                    <Play className="w-3.5 h-3.5 text-emerald-400" />
-                    <span>Girar</span>
-                  </>
-                )}
-              </button>
-            )}
-          </div>
         </div>
 
-        {/* MODE 1: Animated Rotator (Authentic Telegram Chat Interface) */}
-        {viewMode === 'carousel' && (
-          <div className="max-w-3xl mx-auto" onMouseEnter={() => setIsPlaying(false)} onMouseLeave={() => setIsPlaying(true)}>
-            
-            <div className="relative min-h-[520px]">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeReview.id}
-                  initial={{ opacity: 0, scale: 0.97, y: 15 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.97, y: -15 }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                  className="bg-[#0e1621] border border-sky-500/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col font-sans border-t-2 border-t-sky-400"
-                  id={`review-card-${activeReview.id}`}
-                >
-                  {/* REAL TELEGRAM TOP APP HEADER */}
-                  <div className="bg-[#17212b] px-4 sm:px-6 py-3.5 border-b border-black/40 flex items-center justify-between shadow-md">
-                    
-                    {/* Left: Avatar + Real Telegram Contact Info */}
-                    <div className="flex items-center gap-3">
-                      <ArrowLeft className="w-5 h-5 text-gray-400 hidden sm:block cursor-pointer hover:text-white transition-colors" />
-                      
-                      <div className="relative">
-                        <img
-                          src={activeReview.customerAvatar}
-                          alt={activeReview.customerName}
-                          referrerPolicy="no-referrer"
-                          className="w-10 h-10 rounded-full object-cover border border-sky-400/40 shadow-md"
-                        />
-                        <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-[#17212b] rounded-full" />
-                      </div>
-
-                      <div>
-                        <div className="flex items-center gap-1.5">
-                          <h4 className="font-display font-bold text-sm text-white tracking-wide">
-                            {activeReview.customerName}
-                          </h4>
-                          <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-500/30">
-                            Vuelo Emitido ✓
-                          </span>
-                        </div>
-                        <p className="text-[11px] text-sky-300 font-sans flex items-center gap-1.5 mt-0.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          <span>en línea • Cotizando {activeReview.routeTitle}</span>
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Right: Telegram Actions Icons */}
-                    <div className="flex items-center gap-3 text-gray-400">
-                      <div className="hidden sm:flex text-amber-400 items-center mr-2">
-                        {Array.from({ length: activeReview.rating }).map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-amber-400" />
-                        ))}
-                      </div>
-                      <Phone className="w-4 h-4 cursor-pointer hover:text-white transition-colors" />
-                      <Search className="w-4 h-4 cursor-pointer hover:text-white transition-colors" />
-                      <MoreVertical className="w-4 h-4 cursor-pointer hover:text-white transition-colors" />
-                    </div>
-                  </div>
-
-                  {/* TELEGRAM CHAT CANVAS (WALLPAPER WITH PATTERN) */}
-                  <div 
-                    className="p-4 sm:p-6 space-y-4 flex-grow bg-[#0e1621] text-xs font-sans relative overflow-y-auto max-h-[460px]"
-                    style={{
-                      backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.05) 1.2px, transparent 0)`,
-                      backgroundSize: '18px 18px'
-                    }}
-                  >
-                    {/* Floating Date Badge inside Telegram */}
-                    <div className="text-center my-2">
-                      <span className="bg-[#17212b]/90 backdrop-blur-md text-sky-200 text-[10px] px-3.5 py-1 rounded-full border border-sky-400/20 font-medium shadow-md">
-                        📅 {activeReview.date} • Chat verificado por Telegram
-                      </span>
-                    </div>
-
-                    {activeReview.messages.map((msg, idx) => {
-                      const isAgent = msg.sender === 'agent';
-                      return (
-                        <motion.div
-                          key={idx}
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.2, delay: idx * 0.1 }}
-                          className={`flex flex-col ${isAgent ? 'items-end' : 'items-start'} mb-1`}
-                        >
-                          {/* Message Bubble with Telegram authentic styling */}
-                          <div
-                            className={`max-w-[88%] sm:max-w-[78%] p-3 rounded-2xl relative shadow-md text-xs sm:text-sm leading-relaxed ${
-                              isAgent
-                                ? 'bg-[#2b5278] text-white rounded-tr-xs'
-                                : 'bg-[#182533] text-gray-100 rounded-tl-xs'
-                            }`}
-                          >
-                            {/* Flight Ticket Quote Card (Telegram Quote Style) */}
-                            {msg.flightBadge && (
-                              <div className="mb-2 p-2.5 rounded-r-lg bg-black/25 border-l-4 border-amber-400 text-xs text-amber-100 flex items-center justify-between gap-2">
-                                <div className="space-y-0.5">
-                                  <div className="flex items-center gap-1.5 text-[10px] font-bold text-amber-300 uppercase tracking-wider">
-                                    <Plane className="w-3 h-3 text-amber-400" />
-                                    <span>Cotización Oficial Travel US</span>
-                                  </div>
-                                  <p className="font-semibold text-white text-xs">{msg.flightBadge}</p>
-                                </div>
-                                <span className="text-[9px] bg-amber-400/20 text-amber-300 font-bold px-2 py-0.5 rounded border border-amber-400/30 shrink-0">
-                                  CONFIRMADO
-                                </span>
-                              </div>
-                            )}
-
-                            {/* Voice Note Attachment UI (Authentic Telegram Audio Player) */}
-                            {msg.attachmentType === 'voice' && (
-                              <div className="mb-2.5 p-2 rounded-xl bg-black/20 flex items-center gap-3">
-                                <button className="w-9 h-9 rounded-full bg-[#5288c1] text-white flex items-center justify-center shrink-0 shadow hover:scale-105 transition-transform">
-                                  <Play className="w-4 h-4 ml-0.5 fill-white" />
-                                </button>
-                                <div className="flex-grow">
-                                  <div className="flex items-center gap-1 h-4 px-1">
-                                    <span className="w-1 bg-sky-300 h-3 rounded-full animate-pulse" />
-                                    <span className="w-1 bg-sky-200 h-2 rounded-full" />
-                                    <span className="w-1 bg-sky-300 h-4 rounded-full animate-pulse" />
-                                    <span className="w-1 bg-sky-200 h-1.5 rounded-full" />
-                                    <span className="w-1 bg-sky-300 h-3 rounded-full" />
-                                    <span className="w-1 bg-sky-200 h-2.5 rounded-full animate-pulse" />
-                                    <span className="w-1 bg-sky-300 h-4 rounded-full" />
-                                    <span className="w-1 bg-sky-200 h-2 rounded-full" />
-                                    <span className="w-1 bg-sky-300 h-3 rounded-full" />
-                                    <span className="w-1 bg-sky-200 h-1 rounded-full" />
-                                    <span className="w-1 bg-sky-300 h-2.5 rounded-full" />
-                                  </div>
-                                  <div className="flex justify-between text-[10px] text-sky-200/90 font-mono mt-0.5 px-1">
-                                    <span>Mensaje de voz</span>
-                                    <span>{msg.audioDuration || '0:28'}</span>
-                                  </div>
-                                </div>
-                              </div>
-                            )}
-
-                            {/* Document Attachment UI (Telegram File Style) */}
-                            {msg.attachmentType === 'ticket' && (
-                              <div className="mb-2 p-2.5 rounded-xl bg-black/25 flex items-center justify-between gap-3 border border-white/5">
-                                <div className="flex items-center gap-2.5 overflow-hidden">
-                                  <div className="w-9 h-9 rounded-lg bg-[#5288c1]/30 text-sky-300 flex items-center justify-center shrink-0">
-                                    <Paperclip className="w-4 h-4" />
-                                  </div>
-                                  <div className="truncate">
-                                    <p className="font-semibold text-white text-xs truncate">{msg.attachmentTitle || 'E-Ticket_Confirmado_TravelUS.pdf'}</p>
-                                    <p className="text-[10px] text-gray-300/80">340 KB • Documento PDF</p>
-                                  </div>
-                                </div>
-                                <span className="text-[9px] font-bold text-emerald-300 bg-emerald-500/20 px-2 py-1 rounded border border-emerald-500/30 shrink-0 uppercase">
-                                  Verificado
-                                </span>
-                              </div>
-                            )}
-
-                            {/* Text Message */}
-                            <p className="font-sans font-normal text-gray-100 text-xs sm:text-sm leading-relaxed">{msg.text}</p>
-
-                            {/* Timestamp & Telegram double checkmark (Only agent outgoing gets checkmarks) */}
-                            <div className="mt-1 flex items-center justify-end gap-1 text-[10px] text-sky-200/70 select-none">
-                              <span>{msg.time}</span>
-                              {isAgent && (
-                                <CheckCheck className="w-3.5 h-3.5 text-sky-300 fill-sky-300/20" />
-                              )}
-                            </div>
-                          </div>
-                        </motion.div>
-                      );
-                    })}
-
-                    {/* Simulated typing indicator */}
-                    <div className="flex items-center gap-2 text-[11px] text-sky-300/80 pt-2 font-mono">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                      <span>Despacho Travel US en línea... (Respuesta promedio &lt; 3 min por Telegram)</span>
-                    </div>
-                  </div>
-
-                  {/* TELEGRAM REALISTIC BOTTOM INPUT PROMPT BAR */}
-                  <div className="bg-[#17212b] p-3 border-t border-black/40 flex items-center gap-2">
-                    <Paperclip className="w-5 h-5 text-gray-400 cursor-pointer hover:text-white transition-colors ml-1" />
-                    
-                    <a
-                      href={getTelegramUrl(`Hola, me interesó la cotización de ${activeReview.routeTitle}`)}
-                      target="_blank"
-                      referrerPolicy="no-referrer"
-                      className="flex-grow bg-[#0e1621] hover:bg-[#121c2a] border border-white/10 rounded-full px-4 py-2.5 text-xs text-gray-300 flex items-center justify-between transition-colors cursor-pointer group"
-                    >
-                      <span className="text-gray-400 group-hover:text-white font-sans">
-                        💬 Escribe tu ruta o cotiza igual a {activeReview.customerName}...
-                      </span>
-                      <Smile className="w-4 h-4 text-gray-400 group-hover:text-amber-400 transition-colors" />
-                    </a>
-
-                    <a
-                      href={getTelegramUrl(`Hola, quiero cotizar un vuelo como el de ${activeReview.customerName}`)}
-                      target="_blank"
-                      referrerPolicy="no-referrer"
-                      className="p-2.5 bg-sky-500 hover:bg-sky-600 text-white rounded-full transition-transform active:scale-95 shadow-md flex items-center justify-center shrink-0 cursor-pointer"
-                      title="Abrir Telegram"
-                    >
-                      <Send className="w-4 h-4" />
-                    </a>
-                  </div>
-
-                  {/* Bottom Verification Footer */}
-                  <div className="bg-[#121b26] px-6 py-2.5 border-t border-white/5 flex items-center justify-between text-[11px] text-gray-400">
-                    <span className="flex items-center gap-1.5 text-emerald-400 font-medium">
-                      <ShieldCheck className="w-3.5 h-3.5 text-brand-gold" />
-                      Atención directa por Piloto Comercial sin intermediarios
-                    </span>
-                    <span className="text-sky-400 font-semibold flex items-center gap-1 text-[11px]">
-                      <Clock className="w-3 h-3 text-sky-400" /> Respuesta &lt; 5 min
-                    </span>
-                  </div>
-
-                </motion.div>
-              </AnimatePresence>
+        {/* HORIZONTAL CAROUSEL OF HYPERREALISTIC TELEGRAM CHAT CARDS */}
+        <div className="mb-10 relative group">
+          {/* Section subtitle & navigation buttons */}
+          <div className="flex items-center justify-between mb-4 px-2">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <h3 className="text-xs sm:text-sm font-bold text-sky-200 uppercase tracking-wider">
+                Desliza para ver todos los chats reales en vivo ({reviewsList.length})
+              </h3>
             </div>
-
-            {/* Rotator Controls & Navigation */}
-            <div className="flex items-center justify-between mt-6 px-2">
+            
+            <div className="flex items-center gap-2">
               <button
-                onClick={handlePrev}
-                className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer border border-white/10"
-                aria-label="Anterior conversación"
-                id="btn-prev-review"
+                onClick={() => scrollCarousel('left')}
+                className="p-2 rounded-xl bg-[#17212b] border border-sky-400/30 text-gray-300 hover:text-white hover:bg-sky-500/20 hover:border-sky-400 transition-all cursor-pointer shadow-lg active:scale-95"
+                title="Deslizar izquierda"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
-
-              {/* Indicators */}
-              <div className="flex items-center gap-2">
-                {telegramReviews.map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentIndex(i)}
-                    className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      i === currentIndex ? 'w-8 bg-brand-gold' : 'w-2.5 bg-white/20 hover:bg-white/40'
-                    }`}
-                    aria-label={`Ir a conversación ${i + 1}`}
-                  />
-                ))}
-              </div>
-
               <button
-                onClick={handleNext}
-                className="p-3 rounded-full bg-white/10 hover:bg-white/20 text-white transition-all cursor-pointer border border-white/10"
-                aria-label="Siguiente conversación"
-                id="btn-next-review"
+                onClick={() => scrollCarousel('right')}
+                className="p-2 rounded-xl bg-[#17212b] border border-sky-400/30 text-gray-300 hover:text-white hover:bg-sky-500/20 hover:border-sky-400 transition-all cursor-pointer shadow-lg active:scale-95"
+                title="Deslizar derecha"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
             </div>
-
           </div>
-        )}
 
-        {/* MODE 2: Grid View (Mosaico Completo de Chats Telegram) */}
-        {viewMode === 'grid' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="reviews-grid">
-            {telegramReviews.map((rev) => (
-              <div
-                key={rev.id}
-                className="bg-[#0e1621] border border-white/10 rounded-xl overflow-hidden shadow-xl flex flex-col justify-between hover:border-sky-500/50 transition-all duration-300 group"
-              >
-                {/* Telegram Card Header */}
-                <div className="bg-[#17212b] p-3.5 border-b border-white/5 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={rev.customerAvatar}
-                      alt={rev.customerName}
-                      referrerPolicy="no-referrer"
-                      className="w-9 h-9 rounded-full object-cover border border-sky-400/30"
-                    />
-                    <div>
-                      <h4 className="font-display font-bold text-xs text-white">{rev.customerName}</h4>
-                      <p className="text-[10px] text-emerald-400 font-sans flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                        Vuelo Confirmado
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex text-amber-400">
-                    {Array.from({ length: rev.rating }).map((_, i) => (
-                      <Star key={i} className="w-3 h-3 fill-amber-400" />
-                    ))}
-                  </div>
-                </div>
+          {/* Scrollable Container */}
+          <div
+            ref={carouselRef}
+            className="flex gap-4 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-sky-500/30 scrollbar-track-transparent select-none scroll-smooth"
+          >
+            {reviewsList.map((chat) => {
+              const isSelected = chat.id === selectedChatId;
+              const customerFirstMsg = chat.messages.find(m => m.sender === 'customer') || chat.messages[0];
+              const agentFirstMsg = chat.messages.find(m => m.sender === 'agent');
+              const lastPhotoMsg = chat.messages.find(m => m.imageAttachment);
 
-                {/* Body snippet */}
-                <div className="p-4 bg-[#0e1621] space-y-3 flex-grow text-xs font-sans">
-                  <span className="text-[10px] font-bold text-brand-gold uppercase tracking-wider block bg-black/30 p-1.5 rounded border border-white/5">
-                    📍 {rev.routeTitle}
-                  </span>
-                  
-                  {rev.messages.map((msg, idx) => (
-                    <div
-                      key={idx}
-                      className={`p-2.5 rounded-xl ${
-                        msg.sender === 'agent'
-                          ? 'bg-[#2b5278] text-white ml-auto max-w-[92%] rounded-tr-xs'
-                          : 'bg-[#182533] text-gray-200 max-w-[92%] rounded-tl-xs'
-                      }`}
-                    >
-                      <p className="text-[11px] font-light leading-relaxed">{msg.text}</p>
-                      <div className="flex items-center justify-end gap-1 text-[9px] text-sky-200/80 mt-1">
-                        <span>{msg.time}</span>
-                        <CheckCheck className="w-3 h-3 text-sky-300" />
+              return (
+                <div
+                  key={chat.id}
+                  onClick={() => setSelectedChatId(chat.id)}
+                  className={`w-[310px] sm:w-[350px] shrink-0 snap-start bg-[#17212b] border rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between group/card ${
+                    isSelected
+                      ? 'border-sky-400 ring-2 ring-sky-400/30 scale-[1.02]'
+                      : 'border-white/10 hover:border-sky-400/50 hover:bg-[#1f2c38]'
+                  }`}
+                >
+                  {/* Card Header (Telegram Phone Header Style) */}
+                  <div className="bg-[#101721] p-3.5 border-b border-black/30 flex items-center justify-between">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="relative shrink-0">
+                        <img
+                          src={chat.customerAvatar}
+                          alt={chat.customerName}
+                          referrerPolicy="no-referrer"
+                          className="w-10 h-10 rounded-full object-cover border border-sky-400/40"
+                        />
+                        {chat.isOnline && (
+                          <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#101721] rounded-full" />
+                        )}
+                      </div>
+
+                      <div className="min-w-0">
+                        <h4 className="font-bold text-xs text-white truncate flex items-center gap-1.5">
+                          <span>{chat.customerName}</span>
+                          <span className="text-[10px] text-sky-300 font-mono font-normal truncate">{chat.customerHandle}</span>
+                        </h4>
+                        <p className="text-[10px] text-emerald-400 font-medium flex items-center gap-1 truncate">
+                          <Check className="w-3 h-3 text-emerald-400" />
+                          <span>E-Ticket Emitido • {chat.routeTitle}</span>
+                        </p>
                       </div>
                     </div>
-                  ))}
-                </div>
 
-                {/* Footer Action */}
-                <div className="bg-[#17212b] px-4 py-3 border-t border-white/5 flex items-center justify-between text-[11px]">
-                  <span className="text-gray-400 text-[10px]">{rev.date}</span>
-                  <a
-                    href={getTelegramUrl(`Hola, vi la experiencia de ${rev.customerName} y quiero cotizar mi vuelo.`)}
-                    target="_blank"
-                    referrerPolicy="no-referrer"
-                    className="text-sky-400 font-bold hover:text-brand-gold flex items-center gap-1 transition-colors"
+                    <div className="flex items-center gap-0.5 text-amber-400 shrink-0">
+                      {Array.from({ length: chat.rating }).map((_, i) => (
+                        <Star key={i} className="w-3 h-3 fill-amber-400" />
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Card Body (Chat Preview Bubble Window) */}
+                  <div 
+                    className="p-3.5 space-y-2.5 flex-grow bg-[#0e1621] relative min-h-[220px]"
+                    style={{
+                      backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0)`,
+                      backgroundSize: '16px 16px'
+                    }}
                   >
-                    Cotizar mi Vuelo <Send className="w-3 h-3" />
-                  </a>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+                    {/* Customer Question Bubble */}
+                    <div className="bg-[#182533] p-2.5 rounded-xl rounded-tl-xs border border-white/5 text-[11px] text-gray-200 leading-snug">
+                      <p className="font-bold text-amber-400 text-[10px] mb-0.5">{chat.customerName}</p>
+                      <p className="line-clamp-2">{customerFirstMsg.text}</p>
+                      <span className="text-[9px] text-gray-400 block text-right mt-1">{customerFirstMsg.time}</span>
+                    </div>
 
-        {/* HIGH IMPACT TELEGRAM CALL-TO-ACTION BANNER */}
-        <div className="mt-16 text-center bg-gradient-to-r from-[#142234] via-[#1c2e47] to-[#142234] border border-sky-400/30 rounded-3xl p-8 sm:p-10 max-w-4xl mx-auto backdrop-blur-md shadow-2xl relative overflow-hidden group">
+                    {/* Photo preview if available */}
+                    {lastPhotoMsg?.imageAttachment && (
+                      <div 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveModalImage({
+                            url: lastPhotoMsg.imageAttachment!,
+                            caption: lastPhotoMsg.imageCaption,
+                            title: `E-ticket - ${chat.customerName}`
+                          });
+                        }}
+                        className="rounded-lg overflow-hidden border border-sky-400/30 relative h-28 group-hover/card:scale-[1.01] transition-transform cursor-pointer"
+                      >
+                        <img
+                          src={lastPhotoMsg.imageAttachment}
+                          alt="Vuelo adjunto"
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-2">
+                          <span className="text-[10px] font-bold text-white truncate drop-shadow">
+                            📸 {lastPhotoMsg.imageCaption || 'Adjunto oficial'}
+                          </span>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Agent Response Bubble */}
+                    {agentFirstMsg && (
+                      <div className="bg-[#2b5278] p-2.5 rounded-xl rounded-tr-xs border border-sky-400/20 text-[11px] text-white leading-snug ml-3">
+                        <p className="font-bold text-sky-300 text-[10px] mb-0.5">Capitán Brayan 👨‍✈️</p>
+                        <p className="line-clamp-2">{agentFirstMsg.text}</p>
+                        
+                        {agentFirstMsg.flightBadge && (
+                          <div className="mt-1.5 p-1 bg-black/30 rounded border-l-2 border-amber-400 text-[10px] font-bold text-amber-300 truncate">
+                            {agentFirstMsg.flightBadge}
+                          </div>
+                        )}
+                        
+                        <div className="flex items-center justify-between mt-1 text-[9px] text-sky-200/80">
+                          <span className="text-emerald-300 font-bold">✓ PNR Amadeus</span>
+                          <span className="flex items-center gap-0.5">
+                            {agentFirstMsg.time} <CheckCheck className="w-3 h-3 text-sky-300" />
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Card Footer Button */}
+                  <div className="p-3 bg-[#17212b] border-t border-black/30 flex items-center justify-between">
+                    <span className="text-[10px] text-sky-300 font-mono">
+                      {chat.messages.length} mensajes • {chat.date.split(',')[0]}
+                    </span>
+                    
+                    <a
+                      href={getTelegramUrl()}
+                      target="_blank"
+                      referrerPolicy="no-referrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer bg-sky-500/20 text-sky-300 hover:bg-sky-500 hover:text-white"
+                    >
+                      <span>Cotizar en Telegram</span>
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* HIGH IMPACT TELEGRAM CALL TO ACTION BANNER WITH HIGH RES NIGHT CITY AERIAL BACKDROP */}
+        <div className="mt-14 text-center bg-[#142234] border border-sky-400/30 rounded-3xl p-8 sm:p-12 max-w-4xl mx-auto shadow-2xl relative overflow-hidden group">
           
-          <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-sky-500/10 rounded-full blur-3xl group-hover:bg-sky-500/20 transition-all duration-700" />
-          <div className="absolute -left-10 -top-10 w-48 h-48 bg-brand-gold/10 rounded-full blur-3xl group-hover:bg-brand-gold/20 transition-all duration-700" />
+          {/* Background image backdrop */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:scale-105 transition-transform duration-1000"
+            style={{ backgroundImage: `url(${nightCityAerialImg})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#142234]/85 via-[#142234]/90 to-[#0f1926]/95 z-0" />
+
+          <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-sky-500/20 rounded-full blur-3xl group-hover:bg-sky-500/30 transition-all duration-700" />
+          <div className="absolute -left-10 -top-10 w-48 h-48 bg-brand-gold/20 rounded-full blur-3xl group-hover:bg-brand-gold/30 transition-all duration-700" />
 
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30 mb-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30 mb-4 shadow-sm backdrop-blur-md">
               <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-spin" />
-              <span>DESPACHO ACTIVO DE TIQUETES AÉREOS</span>
+              <span>DESPACHO DIRECTO DE TIQUETES Y TARIFAS CORPORATIVAS</span>
             </div>
 
-            <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold text-white mb-3">
-              ¿Quieres Cotizar Tu Vuelo en Menos de 5 Minutos?
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-display font-extrabold text-white mb-4 drop-shadow-md">
+              ¿Te gustaría obtener los tiquetes Aéreos más económicos del mercado?
             </h3>
             
-            <p className="text-gray-300 font-sans text-xs sm:text-sm mb-8 max-w-xl mx-auto leading-relaxed">
-              Habla directamente con nuestro Capitán por Telegram. Te enviamos las mejores tarifas de aerolínea, horarios óptimos y consejos de cabina sin ningún compromiso.
-            </p>
+            <div className="mb-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-200 font-medium">
+              <span className="bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">✓ Sin intermediarios</span>
+              <span className="hidden sm:inline">•</span>
+              <span className="bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">✓ Tarifas consolidadas</span>
+              <span className="hidden sm:inline">•</span>
+              <span className="bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm border border-white/10">✓ Asesoría 100% gratuita</span>
+            </div>
 
             <a
               href={getTelegramUrl()}
@@ -517,20 +298,62 @@ export default function TelegramReviews({ telegramConfig }: TelegramReviewsProps
               id="btn-reviews-cta"
             >
               <Send className="w-5 h-5 group-hover/btn:rotate-12 transition-transform duration-300" />
-              <span>Hablar con el Capitán por Telegram</span>
+              <span>Hablar con el Capitán por Telegram (@{telegramConfig.channelUsername})</span>
             </a>
-
-            <div className="mt-4 flex items-center justify-center gap-4 text-[11px] text-gray-400 font-medium">
-              <span>✓ Sin intermediarios</span>
-              <span>•</span>
-              <span>✓ Tarifas consolidadas</span>
-              <span>•</span>
-              <span>✓ Asesoría 100% gratuita</span>
-            </div>
           </div>
         </div>
 
       </div>
+
+      {/* FULLSCREEN LIGHTBOX MODAL FOR TELEGRAM ATTACHMENT PHOTOS */}
+      <AnimatePresence>
+        {activeModalImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveModalImage(null)}
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="max-w-4xl w-full bg-[#17212b] border border-sky-400/30 rounded-2xl overflow-hidden shadow-2xl relative flex flex-col"
+            >
+              <div className="p-4 bg-[#0e1621] border-b border-white/10 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <ImageIcon className="w-4 h-4 text-sky-400" />
+                  <span className="font-bold text-sm text-white">{activeModalImage.title || 'Adjunto Telegram'}</span>
+                </div>
+                <button
+                  onClick={() => setActiveModalImage(null)}
+                  className="p-1 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-2 bg-black flex items-center justify-center min-h-[300px]">
+                <img
+                  src={activeModalImage.url}
+                  alt={activeModalImage.caption || 'Imagen Telegram'}
+                  referrerPolicy="no-referrer"
+                  className="max-h-[70vh] w-auto object-contain rounded-lg"
+                />
+              </div>
+
+              {activeModalImage.caption && (
+                <div className="p-4 bg-[#17212b] border-t border-white/10 text-xs text-gray-200 text-center font-medium">
+                  {activeModalImage.caption}
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </section>
   );
 }

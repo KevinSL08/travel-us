@@ -1,6 +1,8 @@
 import { ShieldCheck, Ticket, PlaneTakeoff, Send } from 'lucide-react';
 import { motion } from 'motion/react';
 
+const cockpitImg = new URL('../assets/images/cockpit_sunset_flight_1785799009662.jpg', import.meta.url).href;
+
 export default function Features() {
   const features = [
     {
@@ -49,11 +51,11 @@ export default function Features() {
 
   return (
     <section className="py-24 bg-brand-beige relative overflow-hidden" id="features-section">
-      {/* Background thematic aviation cloud skyline image with overlay */}
+      {/* Background high-resolution cockpit photograph */}
       <div 
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-10 pointer-events-none"
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-15 pointer-events-none mix-blend-multiply"
         style={{ 
-          backgroundImage: `url('https://images.unsplash.com/photo-1508873696983-2df515122519?auto=format&fit=crop&w=1600&q=80')` 
+          backgroundImage: `url(${cockpitImg})` 
         }}
       />
 

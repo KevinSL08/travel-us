@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Star, Clock, CheckCircle, Send, ArrowRight, X, PlaneTakeoff, Info, Award } from 'lucide-react';
+import { Star, Clock, CheckCircle, Send, ArrowRight, X, PlaneTakeoff, Info, Award, Plane } from 'lucide-react';
 import { FlightRoute, TelegramConfig } from '../types';
 import { flightRoutes } from '../data/flightRoutes';
+
+const tarmacImg = new URL('../assets/images/tarmac_sunset_view_1785798997003.jpg', import.meta.url).href;
 
 interface DestinationsProps {
   telegramConfig: TelegramConfig;
@@ -36,8 +38,15 @@ export default function Destinations({ telegramConfig, onSelectDestinationForQuo
   };
 
   return (
-    <section className="py-24 bg-white" id="destinations-section">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-24 bg-white relative overflow-hidden" id="destinations-section">
+      {/* Background tarmac photo backdrop */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-[0.06] pointer-events-none mix-blend-multiply"
+        style={{ 
+          backgroundImage: `url(${tarmacImg})` 
+        }}
+      />
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">

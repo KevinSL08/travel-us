@@ -28,7 +28,14 @@ export interface QuoteRequest {
   notes: string;
 }
 
+export interface TelegramReaction {
+  emoji: string;
+  count: number;
+  userReacted?: boolean;
+}
+
 export interface TelegramMessage {
+  id?: string;
   sender: 'customer' | 'agent';
   senderName?: string;
   avatar?: string;
@@ -37,8 +44,16 @@ export interface TelegramMessage {
   flightBadge?: string;
   isVerified?: boolean;
   audioDuration?: string;
-  attachmentType?: 'ticket' | 'image' | 'voice';
+  attachmentType?: 'ticket' | 'image' | 'voice' | 'photo';
   attachmentTitle?: string;
+  imageAttachment?: string;
+  imageCaption?: string;
+  replyTo?: {
+    senderName: string;
+    text: string;
+  };
+  reactions?: TelegramReaction[];
+  isRead?: boolean;
 }
 
 export interface TelegramReview {
@@ -51,6 +66,11 @@ export interface TelegramReview {
   date: string;
   messages: TelegramMessage[];
   verifiedPurchase: boolean;
+  pinnedMessage?: string;
+  isOnline?: boolean;
+  lastSeen?: string;
+  unreadCount?: number;
+  phone?: string;
 }
 
 export interface TelegramConfig {
