@@ -11,7 +11,7 @@ import paris2Img from '../assets/images/paris2.jpeg';
 import disneyParisImg from '../assets/images/disneyland_paris.jpeg';
 import romeImg from '../assets/images/roma.jpeg';
 import hollandImg from '../assets/images/holanda.jpeg';
-import madrid1Img from '../assets/images/madrid_cibeles_fountain_1785618135352.jpg';
+import madrid1Img from '../assets/images/madrid.jpeg';
 import madrid2Img from '../assets/images/madrid2.jpeg';
 
 export const telegramReviews: TelegramReview[] = [
