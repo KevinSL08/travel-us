@@ -1,7 +1,7 @@
 import { TelegramReview } from '../types';
 import turkeyImg from '../assets/images/turquia.jpeg';
-import disneyUsa1Img from '../assets/images/disneylandusa.jpeg';
-import disneyUsa2Img from '../assets/images/disneylandusa2.jpeg';
+import amsterdamImg from '../assets/images/amsterdam.jpeg';
+import suizaImg from '../assets/images/suiza.jpeg';
 import disneyUsa3Img from '../assets/images/disneylandusa3.jpeg';
 import sanAndres1Img from '../assets/images/sanandres.jpeg';
 import sanAndres2Img from '../assets/images/sanandres2.jpeg';
@@ -60,12 +60,12 @@ export const telegramReviews: TelegramReview[] = [
     ]
   },
 
-  // 2. Disneyland Estados Unidos (1/3)
+  // 2. Amsterdam (1/1)
   {
     id: 'rev-disney-usa-1',
-    locationHeader: 'Disneyland EE.UU. 🇺🇸',
-    locationSubtitle: 'Orlando & Anaheim, EE.UU.',
-    photoUrl: disneyUsa1Img,
+    locationHeader: 'Holanda 🇳🇱',
+    locationSubtitle: 'Ámsterdam, Holanda',
+    photoUrl: amsterdamImg,
     customerName: 'Familia Ramírez',
     customerHandle: '@ramirez_disney',
     customerAvatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80',
@@ -94,7 +94,7 @@ export const telegramReviews: TelegramReview[] = [
         flightBadge: '🏰 ORLANDO (MCO) — Paquete Familiar Disney World',
         isVerified: true,
         attachmentType: 'photo',
-        imageAttachment: disneyUsa1Img,
+        imageAttachment: amsterdamImg,
         reactions: [
           { emoji: '🏰', count: 15 },
           { emoji: '❤️', count: 10 }
@@ -236,12 +236,12 @@ export const telegramReviews: TelegramReview[] = [
     ]
   },
 
-  // 6. Disneyland Estados Unidos (2/3)
+  // 6. Suiza (1/1)
   {
     id: 'rev-disney-usa-2',
-    locationHeader: 'Disneyland EE.UU. 🇺🇸',
-    locationSubtitle: 'Orlando & Anaheim, EE.UU.',
-    photoUrl: disneyUsa2Img,
+    locationHeader: 'Alpes Suizos ch',
+    locationSubtitle: 'Alpes Suizos, Suiza',
+    photoUrl: suizaImg,
     customerName: 'Andrés & Marcela',
     customerHandle: '@andres_epcot_usa',
     customerAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
@@ -271,7 +271,7 @@ export const telegramReviews: TelegramReview[] = [
         flightBadge: '✨ ORLANDO (MCO) — Vuelo Confirmado American Airlines',
         isVerified: true,
         attachmentType: 'photo',
-        imageAttachment: disneyUsa2Img,
+        imageAttachment: suizaImg,
         reactions: [
           { emoji: '🔥', count: 9 },
           { emoji: '😍', count: 11 }
