@@ -21,13 +21,9 @@ export default function Footer({ telegramConfig }: FooterProps) {
               Travel <span className="text-brand-gold">US</span>
             </span>
           </div>
-          <p className="text-xs text-gray-400 leading-relaxed mb-6">
+          <p className="text-xs text-gray-400 leading-relaxed">
             Agencia aérea premium liderada por pilotos de aviación comercial. Diseñamos tus conexiones de vuelos internacionales con el máximo rigor de seguridad y tarifas preferenciales de consolidador.
           </p>
-          <div className="flex items-center gap-2 text-xs text-brand-gold">
-            <ShieldCheck className="w-4 h-4 shrink-0" />
-            <span>Consolidador Registrado & Agentes IATA</span>
-          </div>
         </div>
 
         {/* Dynamic Flight Plan Structure */}
@@ -73,12 +69,7 @@ export default function Footer({ telegramConfig }: FooterProps) {
             </li>
             <li>
               <a href="#reviews-section" className="hover:text-brand-gold transition-colors">
-                Opiniones en Telegram
-              </a>
-            </li>
-            <li>
-              <a href="#faq-section" className="hover:text-brand-gold transition-colors">
-                Preguntas Frecuentes
+                Clientes Satisfechos
               </a>
             </li>
             <li>

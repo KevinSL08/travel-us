@@ -58,6 +58,9 @@ export interface TelegramMessage {
 
 export interface TelegramReview {
   id: string;
+  locationHeader?: string; // e.g. "Turquía 🇹🇷"
+  locationSubtitle?: string; // e.g. "Estambul, Turquía"
+  photoUrl?: string; // Main client trip photo
   customerName: string;
   customerHandle?: string;
   customerAvatar: string;
@@ -65,6 +68,7 @@ export interface TelegramReview {
   rating: number;
   date: string;
   messages: TelegramMessage[];
+  testimonial?: string;
   verifiedPurchase: boolean;
   pinnedMessage?: string;
   isOnline?: boolean;

@@ -122,7 +122,7 @@ export default function App() {
               onClick={() => handleScrollToSection('reviews-section')}
               className="hover:text-brand-gold transition-colors cursor-pointer"
             >
-              Opiniones
+              Clientes Satisfechos
             </button>
           </nav>
 
@@ -181,7 +181,7 @@ export default function App() {
               onClick={() => handleScrollToSection('reviews-section')}
               className="text-left text-lg font-display font-medium py-2 border-b border-white/5 hover:text-brand-gold transition-colors"
             >
-              Opiniones en Telegram
+              Clientes Satisfechos
             </button>
 
             <div className="pt-6">

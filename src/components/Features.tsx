@@ -69,7 +69,7 @@ export default function Features() {
           </h2>
           <div className="w-16 h-1 bg-brand-gold mx-auto mb-6 rounded-full" />
           <p className="text-gray-600 font-sans leading-relaxed text-xs md:text-sm">
-            No somos un algoritmo frio de reservas. Somos profesionales del aire liderados por un Capitán activo, garantizando tarifas competitivas en Pesos Colombianos (COP) y atención directa por Telegram.
+            Somos profesionales del sector aeronáutico liderados por un Capitán comercial activo. Garantizamos la máxima seguridad técnica en tus itinerarios, tarifas de consolidación aérea en Pesos Colombianos (COP) y Dólares (USD), y atención personalizada directa sin intermediarios.
           </p>
         </div>
 

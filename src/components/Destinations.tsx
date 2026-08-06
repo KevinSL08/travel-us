@@ -32,7 +32,7 @@ export default function Destinations({ telegramConfig, onSelectDestinationForQuo
 
   const getTelegramInquiryUrl = (destName: string) => {
     const text = encodeURIComponent(
-      `¡Hola Travel US! ✈️ Quisiera consultar la tarifa aérea para la ruta hacia *${destName}*. Me llama la atención la recomendación técnica del piloto comercial. ¿Me podrían cotizar opciones? 👍`
+      `¡Hola Travel US! ✈️ Quisiera consultar la tarifa aérea para la ruta hacia *${destName}*. ¿Me podrían cotizar opciones? 👍`
     );
     return `https://t.me/${telegramConfig.channelUsername}?text=${text}`;
   };
@@ -49,23 +49,21 @@ export default function Destinations({ telegramConfig, onSelectDestinationForQuo
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-          <div>
-            <span className="text-sm font-semibold tracking-widest text-brand-gold uppercase block mb-3">
-              Rutas Nacionales e Internacionales Auditadas
-            </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-navy" id="destinations-title">
-              Destinos Destacados Travel US
-            </h2>
-            <div className="w-20 h-1 bg-brand-gold mt-4 mb-3 rounded-full" />
-          </div>
-          <p className="text-gray-500 max-w-md font-sans text-xs md:text-sm leading-relaxed">
+        <div className="text-center max-w-3xl mx-auto mb-12">
+          <span className="text-sm font-semibold tracking-widest text-brand-gold uppercase block mb-3">
+            Rutas Nacionales e Internacionales Auditadas
+          </span>
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-brand-navy" id="destinations-title">
+            Destinos Destacados Travel US
+          </h2>
+          <div className="w-20 h-1 bg-brand-gold mx-auto my-4 rounded-full" />
+          <p className="text-gray-500 font-sans text-xs md:text-sm leading-relaxed max-w-2xl mx-auto">
             Explora las rutas más cotizadas. Planificadas y auditadas por un piloto comercial activo para asegurar escalas cómodas, aerolíneas seguras y tiempos de vuelo óptimos.
           </p>
         </div>
 
         {/* Category Filters */}
-        <div className="flex flex-wrap gap-2 mb-10 pb-4 border-b border-gray-100" id="destinations-filters">
+        <div className="flex flex-wrap justify-center gap-2 mb-10 pb-4 border-b border-gray-100" id="destinations-filters">
           {categories.map((cat) => (
             <button
               key={cat.value}
@@ -146,12 +144,6 @@ export default function Destinations({ telegramConfig, onSelectDestinationForQuo
                     <p className="text-gray-500 font-sans text-xs leading-relaxed mb-4 line-clamp-3">
                       {route.description}
                     </p>
-
-                    {/* Short snippet of the Pilot tip to intrigue */}
-                    <div className="p-3 rounded-lg bg-brand-beige border border-amber-100 text-[11px] text-gray-700 mb-4 flex items-start gap-1.5 line-clamp-2">
-                      <span className="shrink-0 mt-0.5">👨‍✈️</span>
-                      <span><strong>Tip de Piloto:</strong> {route.pilotTip}</span>
-                    </div>
                   </div>
 
                   {/* Action Footer */}
@@ -235,20 +227,6 @@ export default function Destinations({ telegramConfig, onSelectDestinationForQuo
                 {/* Modal Body */}
                 <div className="p-8 overflow-y-auto flex-grow font-sans">
                   
-                  {/* PILOT INSIDER NOTE (MAIN FEATURE) */}
-                  <div className="p-5 rounded-xl bg-amber-50 border border-amber-200 text-sm mb-6 shadow-sm">
-                    <div className="flex items-center gap-2 mb-2 text-brand-gold-hover font-display font-bold">
-                      <Award className="w-5 h-5 text-brand-gold" />
-                      <span>RECOMENDACIÓN TÉCNICA DEL PILOTO</span>
-                    </div>
-                    <p className="text-gray-700 italic text-xs md:text-sm leading-relaxed font-sans">
-                      "{selectedRoute.pilotTip}"
-                    </p>
-                    <div className="mt-3 text-[10px] text-gray-400 font-semibold tracking-wider text-right uppercase">
-                      — Capitán & Fundador, Travel US
-                    </div>
-                  </div>
-
                   <h4 className="text-xs font-bold uppercase tracking-widest text-brand-gold mb-3">
                     Acerca de esta Ruta Aérea
                   </h4>
