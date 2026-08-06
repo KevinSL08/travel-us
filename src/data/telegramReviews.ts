@@ -1,18 +1,18 @@
 import { TelegramReview } from '../types';
-import turkeyImg from '../assets/images/turkey_istanbul_user_photo_1785973178509.jpg';
-import disneyUsa1Img from '../assets/images/disney_usa_castle_1_1785973913779.jpg';
-import disneyUsa2Img from '../assets/images/disney_usa_family_2_1785973924243.jpg';
-import disneyUsa3Img from '../assets/images/disney_usa_hollywood_3_1785974003350.jpg';
-import sanAndres1Img from '../assets/images/san_andres_beach_1_1785973944018.jpg';
-import sanAndres2Img from '../assets/images/san_andres_sea_2_1785973952440.jpg';
-import barcelonaImg from '../assets/images/barcelona_sagrada_1_1785973961764.jpg';
-import paris1Img from '../assets/images/paris_eiffel_twilight_1785618208244.jpg';
-import paris2Img from '../assets/images/paris_louvre_2_1785974012785.jpg';
-import disneyParisImg from '../assets/images/disney_paris_1_1785973970864.jpg';
-import romeImg from '../assets/images/rome_colosseum_1_1785973982005.jpg';
-import hollandImg from '../assets/images/amsterdam_canals_1_1785973991140.jpg';
+import turkeyImg from '../assets/images/turquia.jpeg';
+import disneyUsa1Img from '../assets/images/disneylandusa.jpeg';
+import disneyUsa2Img from '../assets/images/disneylandusa2.jpeg';
+import disneyUsa3Img from '../assets/images/disneylandusa3.jpeg';
+import sanAndres1Img from '../assets/images/sanandres.jpeg';
+import sanAndres2Img from '../assets/images/sanandres2.jpeg';
+import barcelonaImg from '../assets/images/barcelona.jpeg';
+import paris1Img from '../assets/images/paris.jpeg';
+import paris2Img from '../assets/images/paris2.jpeg';
+import disneyParisImg from '../assets/images/disneyland_paris.jpeg';
+import romeImg from '../assets/images/roma.jpeg';
+import hollandImg from '../assets/images/holanda.jpeg';
 import madrid1Img from '../assets/images/madrid_cibeles_fountain_1785618135352.jpg';
-import madrid2Img from '../assets/images/madrid_plaza_mayor_1_1785974163717.jpg';
+import madrid2Img from '../assets/images/madrid2.jpeg';
 
 export const telegramReviews: TelegramReview[] = [
   // 1. Turquía (1)
